@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: http-app-code
+data:
+  app.py: |
+    from flask import Flask
+    import asyncio
+    from nats.aio.client import Client as NATS
+
+    app = Flask(__name__)
+
+    @app.route("/")
+    def send_msg():
+        async def publish():
+            nc = NATS()
+            await nc.connect("nats://nats:4222")
+            await nc.publish("jobs", b"Hello from HTTP Service")
+            await nc.close()
+
+        asyncio.run(publish())
+        return "Message sent to NATS!"
+
+    app.run(host="0.0.0.0", port=5000)

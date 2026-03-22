@@ -3,6 +3,8 @@ kind: Kustomization
 
 resources:
   - ../../../base/nats
+  - ../../../base/http
+  - ../../../base/worker
 
 patches:
   - target:
