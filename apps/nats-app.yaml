@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: nats-app
+  name: nats
   namespace: argocd
 spec:
   project: default
@@ -9,7 +9,7 @@ spec:
   source:
     repoURL: https://github.com/Nishchay16/gitops-assignment.git
     targetRevision: main
-    path: base/nats
+    path: overlays/dev/nats 
 
   destination:
     server: https://kubernetes.default.svc
