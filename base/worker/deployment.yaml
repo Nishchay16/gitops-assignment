@@ -17,7 +17,7 @@ spec:
         image: python:3.11
         command: ["sh", "-c"]
         args:
-          - pip install nats-py && python worker.py
+          - cd /app && pip install nats-py && python worker.py
         volumeMounts:
         - name: worker-code
           mountPath: /app
