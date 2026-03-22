@@ -1,29 +1,12 @@
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: http-service
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: http-service
-  template:
-    metadata:
-      labels:
-        app: http-service
-    spec:
-      containers:
-      - name: http
-        image: python:3.11
-        command: ["sh", "-c"]
-        args:
-          - cd /app && pip install nats-py flask && python app.p
-        ports:
-        - containerPort: 5000
-        volumeMounts:
-        - name: app-code
-          mountPath: /app
-      volumes:
-      - name: app-code
-        configMap:
-          name: http-app-code
+containers:
+- name: http
+  image: python:3.11
+  workingDir: /app
+  command: ["sh", "-c"]
+  args:
+    - pip install nats-py flask && python app.py
+  ports:
+    - containerPort: 5000
+  volumeMounts:
+    - name: app-code
+      mountPath: /app
