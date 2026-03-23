@@ -6,7 +6,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/your-username/gitops-assignment.git # Update this to your repo
+    repoURL: https://github.com/Nishchay16/gitops-assignment.git
     targetRevision: HEAD
     path: base
   destination:

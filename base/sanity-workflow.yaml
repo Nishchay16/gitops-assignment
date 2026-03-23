@@ -1,0 +1,13 @@
+﻿apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  name: nats-connectivity-check
+  namespace: app-system
+spec:
+  entrypoint: check-nats
+  templates:
+  - name: check-nats
+    container:
+      image: alpine:latest
+      command: [sh, -c]
+      args: ["echo 'Testing NATS...'; nc -zv nats-messaging.nats-system.svc.cluster.local 4222"]
