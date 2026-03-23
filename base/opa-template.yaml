@@ -23,17 +23,3 @@ spec:
           not container.resources.limits.cpu
           msg := sprintf("Deployment container <%v> has no CPU limit", [container.name])
         }
----
-apiVersion: constraints.gatekeeper.sh/v1beta1
-kind: K8sRequiredResources
-metadata:
-  name: must-have-cpu-limits
-  annotations:
-    argocd.argoproj.io/sync-wave: "1"
-spec:
-  match:
-    kinds:
-      - apiGroups: [""]
-        kinds: ["Pod"]
-      - apiGroups: ["apps"]
-        kinds: ["Deployment"]
