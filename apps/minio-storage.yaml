@@ -1,0 +1,41 @@
+﻿apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: minio-storage
+  namespace: argocd
+spec:
+  project: default
+  source:
+    chart: minio
+    repoURL: https://charts.bitnami.com/bitnami
+    targetRevision: 14.6.x
+    helm:
+      parameters:
+      - name: image.registry
+        value: "quay.io"
+      - name: image.repository
+        value: "minio/minio"
+      - name: image.tag
+        value: "latest"
+      - name: auth.rootUser
+        value: "admin"
+      - name: auth.rootPassword
+        value: "minioadmin"
+      - name: persistence.enabled
+        value: "false"
+      - name: command
+        value: '["minio"]'
+      - name: args
+        value: '["server", "/data", "--console-address", ":9001"]'
+      # The "Golden Key" - Run as root to bypass the permission denied error
+      - name: podSecurityContext.enabled
+        value: "false"
+      - name: containerSecurityContext.enabled
+        value: "false"
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: minio-system
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
