@@ -5,9 +5,13 @@ metadata:
   namespace: app-system
 spec:
   entrypoint: check-nats
+  serviceAccountName: argo-workflow-sa
   templates:
   - name: check-nats
     container:
       image: alpine:latest
       command: [sh, -c]
       args: ["echo 'Testing NATS...'; nc -zv nats-messaging.nats-system.svc.cluster.local 4222"]
+      resources:
+        limits:
+          cpu: "100m"
