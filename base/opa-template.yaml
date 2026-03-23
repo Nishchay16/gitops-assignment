@@ -12,15 +12,11 @@ spec:
       rego: |
         package k8srequiredresources
         violation[{"msg": msg}] {
-          # Check for Pods directly
-          input.review.kind.kind == "Pod"
           container := input.review.object.spec.containers[_]
           not container.resources.limits.cpu
           msg := sprintf("Pod container <%v> has no CPU limit", [container.name])
         }
         violation[{"msg": msg}] {
-          # Check for Deployments
-          input.review.kind.kind == "Deployment"
           container := input.review.object.spec.template.spec.containers[_]
           not container.resources.limits.cpu
           msg := sprintf("Deployment container <%v> has no CPU limit", [container.name])
