@@ -2,12 +2,12 @@
 
 This repository contains a complete GitOps implementation for a microservices stack using **Argo CD**, **Gatekeeper (OPA)**, and **MetalLB**. It follows the **App-of-Apps pattern** to manage infrastructure and application manifests from a single root application.
 
-## 🏗️ Architecture
+##  Architecture
 - **Root Application:** root-app.yaml (Manages the lifecycle of all sub-applications).
 - **App-of-Apps Pattern:** Located in apps/, defining individual sync policies for MinIO, NATS, and OPA.
 - **Base Manifests:** Located in base/, containing the core K8s resources, RBAC, and Policies.
 
-## 🚀 Key Technical Features
+##  Key Technical Features
 
 ### 1. Automated Policy Enforcement (OPA/Gatekeeper)
 Implemented **Policy-as-Code** to ensure cluster security.
@@ -22,7 +22,7 @@ Implemented **Policy-as-Code** to ensure cluster security.
 ### 3. Automated Sanity Checks
 - **Argo Workflows:** Includes a sanity-workflow.yaml that automatically triggers a NATS connectivity check upon deployment to verify the messaging layer is functional.
 
-## 🛠️ Deployment & Sync Instructions
+##  Deployment & Sync Instructions
 
 1. **Bootstrap the Cluster:**
    kubectl apply -f root-app.yaml
@@ -30,7 +30,7 @@ Implemented **Policy-as-Code** to ensure cluster security.
 2. **Force Manual Refresh:**
    kubectl annotate application assignment-root -n argocd argocd.argoproj.io/refresh=hard --overwrite
 
-## 🧪 Validation Tests
+##  Validation Tests
 
 ### OPA Policy Test (Negative)
 To verify that the CPU limit policy is active, run a pod without limits:
@@ -41,7 +41,7 @@ kubectl run opa-test --image=nginx -n app-system
 Check the status of the automated sanity check:
 kubectl get workflow -n app-system
 
-## 📂 Project Structure
+##  Project Structure
 - /apps: Argo CD Application manifests.
 - /base: Base Kubernetes resources (Services, Deployments, RBAC).
 - /overlays: Environment-specific patches.
